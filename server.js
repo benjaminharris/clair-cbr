@@ -80,7 +80,7 @@ router.route('/bathrooms/:bathroom_uuid')
 		Bathroom.findOne({ uuid: req.params.bathroom_uuid }, function(err, bathroom) {
 			if (err)
 				res.send(err);
-			console.log(req.body.isOccupied);
+			console.log('The '+req.body.name+' door has been closed.');
 			bathroom.name = req.body.name;
 			bathroom.isOccupied = req.body.isOccupied;
 			bathroom.closeDate = Date();
@@ -96,7 +96,7 @@ router.route('/bathrooms/:bathroom_uuid')
 		Bathroom.findOne({ uuid: req.params.bathroom_uuid }, function(err, bathroom) {
 			if (err)
 				res.send(err);
-			console.log(req.body.isOccupied);
+			console.log('The '+req.body.name+' door has been opened.');
 			bathroom.name = req.body.name;
 			bathroom.isOccupied = req.body.isOccupied;
 			bathroom.openDate = Date();
