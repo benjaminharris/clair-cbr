@@ -24,7 +24,7 @@ var port = process.env.port || 8081;
 var router = express.Router();
 
 router.use(function(req, res, next) {
-	console.log('Something is happening.');
+	console.log('Command received from KumoApp. Something is happening.');
 	next();
 });
 
