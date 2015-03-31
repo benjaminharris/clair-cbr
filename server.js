@@ -66,7 +66,7 @@ router.route('/bathrooms/:bathroom_uuid')
 
 	// get bathroom with associated id
 	.get(function(req, res) {
-		Bathroom.find({ uuid: req.params.bathroom_uuid }, function(err, bathroom) {
+		Bathroom.findOne({ uuid: req.params.bathroom_uuid }, function(err, bathroom) {
 			if (err)
 				res.send(err);
 			res.json(bathroom);
@@ -76,27 +76,11 @@ router.route('/bathrooms/:bathroom_uuid')
 	//update the bathroom with this id
 	.put(function(req, res) {
 
-		if (req.params.isOccupied = true){
-		Bathroom.find({ uuid: req.params.bathroom_uuid }, function(err, bathroom) {
+		if (req.body.isOccupied == "true"){
+		Bathroom.findOne({ uuid: req.params.bathroom_uuid }, function(err, bathroom) {
 			if (err)
 				res.send(err);
-
-			bathroom.name = req.body.name;
-			bathroom.isOccupied = req.body.isOccupied;
-			bathroom.openDate = Date();
-
-			bathroom.save(function(err) {
-				if (err)
-					res.send(err);
-
-				res.json({ message: 'Bathroom updated!' });
-			});
-		})}
-		else if (req.params.isOccupied = false){
-		Bathroom.find({ uuid: req.params.bathroom_uuid }, function(err, bathroom) {
-			if (err)
-				res.send(err);
-
+			console.log(req.body.isOccupied);
 			bathroom.name = req.body.name;
 			bathroom.isOccupied = req.body.isOccupied;
 			bathroom.closeDate = Date();
@@ -105,11 +89,27 @@ router.route('/bathrooms/:bathroom_uuid')
 				if (err)
 					res.send(err);
 
-				res.json({ message: 'Bathroom updated!' });
+				res.json({ message: 'Bathroom opened updated!' });
 			});
-		})};
+		})}
+		else if (req.body.isOccupied == "false"){
+		Bathroom.findOne({ uuid: req.params.bathroom_uuid }, function(err, bathroom) {
+			if (err)
+				res.send(err);
+			console.log(req.body.isOccupied);
+			bathroom.name = req.body.name;
+			bathroom.isOccupied = req.body.isOccupied;
+			bathroom.openDate = Date();
 
-	})
+			bathroom.save(function(err) {
+				if (err)
+					res.send(err);
+
+				res.json({ message: 'Bathroom closed updated!' });
+			})
+		});
+	}
+})
 
 	.delete(function(req, res) {
 		Bathroom.remove({
